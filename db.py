@@ -20,7 +20,6 @@ def main():
     port = args.port
     params = json.loads(args.params) if args.params else {}
     
-    # Your logic to connect to MongoDB and perform operations
     print(f"Connecting to MongoDB database '{db_name}' and collection '{collection_name}' on {host}:{port}")
 
     client = MongoClient(f"mongodb://{host}:{port}/")
