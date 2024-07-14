@@ -25,10 +25,9 @@ def main():
     client = MongoClient(f"mongodb://{host}:{port}/")
     db = client[f'{db_name}']
     collection = db[f'{collection_name}']
-
-
-
-
-
+    data = collection.find(params)
+    # Print the retrieved data
+    for document in data:
+        print(document)
 if __name__ == '__main__':
     main()
