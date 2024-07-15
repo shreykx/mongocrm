@@ -27,28 +27,67 @@
         <div class="px-4 py-2 space-y-2 bg-gray-100 rounded-xl">
             <div class="space-y-1">
                 <label for="dbname" class="text-sm">Database</label><br>
-                <input type="text" class="px-4 py-2 text-sm rounded-md" name="dbname" id="dbname" placeholder="eg. MyDatabase">
+                <input type="text" class="px-4 py-2 text-sm rounded-md" name="dbname" id="dbname"
+                    placeholder="eg. MyDatabase">
             </div>
             <div class="space-y-1">
                 <label for="collname" class="text-sm">Collection</label><br>
-                <input type="text" class="px-4 py-2 text-sm rounded-md" name="collname" id="collname" placeholder="eg. Users">
+                <input type="text" class="px-4 py-2 text-sm rounded-md" name="collname" id="collname"
+                    placeholder="eg. Users">
             </div>
-            
+
             <div class="space-y-1">
                 <label for="param" class="text-sm">Specify</label><br>
                 <div class="">
-                    <input type="text" class="px-4 py-2 text-sm rounded-md" placeholder="Parameter" name="param" id="param">
-                    <input type="text" class="px-4 py-2 text-sm rounded-md" name="param_value" id="param_value" placeholder="Value">
+                    <input type="text" class="px-4 py-2 text-sm rounded-md" placeholder="Parameter" name="param"
+                        id="param">
+                    <input type="text" class="px-4 py-2 text-sm rounded-md" name="param_value" id="param_value"
+                        placeholder="Value">
                 </div>
                 <div class="p-1">
-                    <button type="button" class="px-4 py-2 text-sm w-full bg-blue-600 active:bg-blue-800 text-white text-center border rounded-md">Add Parameter</button>
+                    <button type="button"
+                        class="px-4 py-2 text-sm w-full bg-blue-600 active:bg-blue-800 text-white text-center border rounded-md">Add
+                        Parameter</button>
                 </div>
             </div>
             <div class="w-full p-1">
-                <button type="button" class="px-4 py-2 rounded-md text-white bg-orange-600 w-full text-sm active:bg-orange-800 select-none outline-none">Fetch</button>
+                <button type="button" onclick="fetchData(event)"
+                    class="px-4 py-2 rounded-md text-white disabled:opacity-[0.7] bg-orange-600 w-full text-sm active:bg-orange-800 select-none outline-none">Fetch</button>
             </div>
         </div>
     </div>
+
+    <script>
+        const dbname = document.getElementById("dbname");
+        const collname = document.getElementById("collname");
+
+        function fetchData(e) {
+            e.target.disabled = true;
+
+            if (dbname.value && collname.value) {
+                fetch('/retrieve/data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        db_name: `${dbname.value}`,
+                        collection: `${collname.value}`
+
+                    })
+                }).then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                }).then((data) => {
+                    console.log(data);
+                })
+            } else {
+                alert("Enter correct values.")
+            }
+
+        }
+    </script>
 
 </body>
 

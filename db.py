@@ -1,4 +1,8 @@
-from pymongo import MongoClient
+try:
+    from pymongo import MongoClient
+    print("pymongo is installed.")
+except ModuleNotFoundError:
+    print("pymongo is not installed.")
 
 import argparse
 import json
